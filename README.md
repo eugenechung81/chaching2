@@ -10,6 +10,8 @@ Cha-ching has the capacity to send over any platform because the infrastructure 
 
 ![dia2.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia2.png?raw=true)
 
+![dia6.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia6.png?raw=true)
+
 # Payment Gateways
 
 Venmo, Paypal and Banks are all supported as methods of transfer in Cha-ching.  Users can connect through their preferred payment solution and make payments to the receipent with a different payment login.  This is done through the hawala payment eco-structure.  Cha-ching acts as a broker and holding account for each respective payment solution.  User A using Venmo will "SEND" to Cha-ching Venmo account.  User B is using Paypal will "ACCEPT" from Cha-ching Paypal account.  To the User A and User B, the logical flow is straight forward.  In terms of where the physical money resides, they lie in each respective holding account credited and debited each account.
