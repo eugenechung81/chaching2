@@ -10,7 +10,7 @@ Cha-ching has the capacity to send over any platform because the infrastructure 
 
 ![dia2.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia2.png?raw=true)
 
-![dia6.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia6.png?raw=true)
+![dia6.jpg](https://github.com/eugenechung81/chaching2/blob/master/documents/dia6.jpg?raw=true)
 
 # Payment Gateways
 
