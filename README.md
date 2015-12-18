@@ -2,19 +2,19 @@
 
 Cha-ching was original conceptualized at a Mastercard Hackathon for addressing simplified payments through a keyboard shortcut across all messaging platforms (iMessage, Facebook Message, What's app, Email).  Similiar to Slash, the user will access the keyboard by clicking on the iOS globe button and then inputting the dollar amount to send to the receiver through the chat window.  The sent link is a serialized tag tied to the transfer which the receiptant opens.  This link is a "deep-link" that can open to several options: either a link to install the app or a link to quickly accept the payment through a web portal.  The value proposition of this app is user can pay quickly through any messaging platform and with any payment gateway (Paypal, Venmo, regular ACH).
 
-![<Diagram Here>](https://bitbucket.org/repo/4qj7Rk/images/932455350-dia1.png)
+![<Diagram Here>](https://github.com/eugenechung81/chaching2/blob/master/documents/dia1.png?raw=true)
 
 # Messaging Platform
 
 Cha-ching has the capacity to send over any platform because the infrastructure lives inside the keyboard and is not a separate app.  This allows the user to use the keyboard within iMessage, What's app, Gchat, WeChat and not have install a seperate application each time.  The keyboard also allows users to send a payment without having to leave the context of the conversation, open another app, login and punch in the numbers to make the payment.  The advantage is the ability to make a payment within the keyboard itself.  The serialized tag that is sent is picked up from the recipient which will accept the payment if the recipient has the app installed or allow them to accept the payment through a web portal.
 
-![dia2.png](https://bitbucket.org/repo/4qj7Rk/images/3862947278-dia2.png)
+![dia2.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia2.png?raw=true)
 
 # Payment Gateways
 
 Venmo, Paypal and Banks are all supported as methods of transfer in Cha-ching.  Users can connect through their preferred payment solution and make payments to the receipent with a different payment login.  This is done through the hawala payment eco-structure.  Cha-ching acts as a broker and holding account for each respective payment solution.  User A using Venmo will "SEND" to Cha-ching Venmo account.  User B is using Paypal will "ACCEPT" from Cha-ching Paypal account.  To the User A and User B, the logical flow is straight forward.  In terms of where the physical money resides, they lie in each respective holding account credited and debited each account.
 
-![dia3.png](https://bitbucket.org/repo/4qj7Rk/images/3679561204-dia3.png)
+![dia3.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia3.png?raw=true)
 
 # Common Flow - Rest APIs
 
@@ -132,14 +132,14 @@ print rsp.content
 http://localhost:5000/send
 ```
 
-![dia4.png](https://bitbucket.org/repo/4qj7Rk/images/1928730286-dia4.png)
+![dia4.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia4.png?raw=true)
 
 ## Receive
 ```
 http://localhost:5000/accept?tag_id=1234FF
 ```
 
-![dia5.png](https://bitbucket.org/repo/4qj7Rk/images/3124934842-dia5.png)
+![dia5.png](https://github.com/eugenechung81/chaching2/blob/master/documents/dia5.png?raw=true)
 
 # Verification
 
