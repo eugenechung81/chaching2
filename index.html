@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Chaching2 by eugenechung81</title>
+    <title>Cha-ching by eugenechung81</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -11,8 +11,8 @@
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">Chaching2</h1>
-      <h2 class="project-tagline">Cha-Ching (v2).  Winner of Best Hackers in Transferwise Hackathon.</h2>
+      <h1 class="project-name">Cha-ching</h1>
+      <h2 class="project-tagline">Swift Payments through Keyboard Shortcut</h2>
       <a href="https://github.com/eugenechung81/chaching2" class="btn">View on GitHub</a>
       <a href="https://github.com/eugenechung81/chaching2/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/eugenechung81/chaching2/tarball/master" class="btn">Download .tar.gz</a>
@@ -43,120 +43,10 @@
 <p><img src="https://github.com/eugenechung81/chaching2/blob/master/documents/dia3.png?raw=true" alt="dia3.png"></p>
 
 <h1>
-<a id="common-flow---rest-apis" class="anchor" href="#common-flow---rest-apis" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common Flow - Rest APIs</h1>
-
-<p>This is the flow when external services like iOS will invoke in order to create users and transfers.</p>
-
-<h2>
-<a id="send" class="anchor" href="#send" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Send</h2>
-
-<div class="highlight highlight-source-python"><pre><span class="pl-c"># Create User</span>
-response <span class="pl-k">=</span> requests.post(
-    <span class="pl-v">url</span><span class="pl-k">=</span><span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/user<span class="pl-pds">"</span></span>,
-    <span class="pl-v">data</span><span class="pl-k">=</span>utils.to_json(<span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">    {</span>
-<span class="pl-s">      "py/object": "datas.User",</span>
-<span class="pl-s">      "user_id": "917-555-6666",</span>
-<span class="pl-s">      "venmo_details": {</span>
-<span class="pl-s">        "py/object": "datas.VenmoDetails",</span>
-<span class="pl-s">        "access_code": "29665a58391e6a08f027a298c4e2f6bacf8614f9c82e5aa210fa0f838ad2301e",</span>
-<span class="pl-s">        "venmo_id": "test-user-5",</span>
-<span class="pl-s">        "auth_code": ""</span>
-<span class="pl-s">      },</span>
-<span class="pl-s">      "bank_details": null,</span>
-<span class="pl-s">      "transfer_method": "VENMO",</span>
-<span class="pl-s">      "paypal_details": null,</span>
-<span class="pl-s">      "password": "test",</span>
-<span class="pl-s">      "id": ""</span>
-<span class="pl-s">    }</span>
-<span class="pl-s">    <span class="pl-pds">"""</span></span>),
-    <span class="pl-v">headers</span><span class="pl-k">=</span>{<span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>application/json<span class="pl-pds">"</span></span>}
-)
-<span class="pl-c1">print</span> response.content
-
-<span class="pl-c"># Login User</span>
-response <span class="pl-k">=</span> requests.post(
-    <span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>/token<span class="pl-pds">'</span></span>,
-    <span class="pl-v">data</span><span class="pl-k">=</span>{
-        <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>917-555-6666<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>
-    })
-<span class="pl-c1">print</span> utils.from_json(response.content).get(<span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>).get(<span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>)
-token <span class="pl-k">=</span> utils.from_json(response.content).get(<span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>).get(<span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>)
-
-<span class="pl-c"># Transfer (Create tag id)</span>
-rsp <span class="pl-k">=</span> requests.get(
-    <span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>/transfer/send<span class="pl-pds">'</span></span>,
-    <span class="pl-v">auth</span><span class="pl-k">=</span>HTTPBasicAuth(token, <span class="pl-s"><span class="pl-pds">'</span>x<span class="pl-pds">'</span></span>),
-    <span class="pl-v">data</span><span class="pl-k">=</span>{
-        <span class="pl-s"><span class="pl-pds">"</span>amount<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>2.50<span class="pl-pds">"</span></span>
-    }
-)
-<span class="pl-c1">print</span> rsp.content
-<span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">{</span>
-<span class="pl-s">  "data": {</span>
-<span class="pl-s">    "paypay_approval": null,</span>
-<span class="pl-s">    "tag_id": "7MP2JE",</span>
-<span class="pl-s">    "tag_url": "http://localhost:5000/accept?tag_id=7MP2JE"</span>
-<span class="pl-s">  },</span>
-<span class="pl-s">  "status": true,</span>
-<span class="pl-s">  "status_msg": ""</span>
-<span class="pl-s">}</span>
-<span class="pl-s"><span class="pl-pds">"""</span></span></pre></div>
-
-<h2>
-<a id="receive" class="anchor" href="#receive" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Receive</h2>
-
-<div class="highlight highlight-source-python"><pre><span class="pl-c"># Create User</span>
-response <span class="pl-k">=</span> requests.post(
-    <span class="pl-v">url</span><span class="pl-k">=</span><span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>/user<span class="pl-pds">"</span></span>,
-    <span class="pl-v">data</span><span class="pl-k">=</span>utils.to_json(<span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">    {</span>
-<span class="pl-s">      "py/object": "datas.User",</span>
-<span class="pl-s">      "user_id": "917-555-7777",</span>
-<span class="pl-s">      "venmo_details": {</span>
-<span class="pl-s">        "py/object": "datas.VenmoDetails",</span>
-<span class="pl-s">        "access_code": "29665a58391e6a08f027a298c4e2f6bacf8614f9c82e5aa210fa0f838ad2301e",</span>
-<span class="pl-s">        "venmo_id": "test-user-5",</span>
-<span class="pl-s">        "auth_code": ""</span>
-<span class="pl-s">      },</span>
-<span class="pl-s">      "bank_details": null,</span>
-<span class="pl-s">      "transfer_method": "VENMO",</span>
-<span class="pl-s">      "paypal_details": null,</span>
-<span class="pl-s">      "password": "test",</span>
-<span class="pl-s">      "id": ""</span>
-<span class="pl-s">    }</span>
-<span class="pl-s">    <span class="pl-pds">"""</span></span>),
-    <span class="pl-v">headers</span><span class="pl-k">=</span>{<span class="pl-s"><span class="pl-pds">"</span>Content-Type<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>application/json<span class="pl-pds">"</span></span>}
-)
-<span class="pl-c1">print</span> response.content
-
-<span class="pl-c"># Login User</span>
-response <span class="pl-k">=</span> requests.post(
-    <span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>/token<span class="pl-pds">'</span></span>,
-    <span class="pl-v">data</span><span class="pl-k">=</span>{
-        <span class="pl-s"><span class="pl-pds">"</span>user_id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>917-555-7777<span class="pl-pds">"</span></span>,
-        <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>test<span class="pl-pds">"</span></span>
-    })
-<span class="pl-c1">print</span> utils.from_json(response.content).get(<span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>).get(<span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>)
-token <span class="pl-k">=</span> utils.from_json(response.content).get(<span class="pl-s"><span class="pl-pds">"</span>data<span class="pl-pds">"</span></span>).get(<span class="pl-s"><span class="pl-pds">"</span>token<span class="pl-pds">"</span></span>)
-
-<span class="pl-c"># Transfer (Receive)</span>
-rsp <span class="pl-k">=</span> requests.get(
-    <span class="pl-c1">BASE_URL</span> <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>/transfer/receive<span class="pl-pds">'</span></span>,
-    <span class="pl-v">auth</span><span class="pl-k">=</span>HTTPBasicAuth(token, <span class="pl-s"><span class="pl-pds">'</span>x<span class="pl-pds">'</span></span>),
-    <span class="pl-v">data</span><span class="pl-k">=</span>{
-        <span class="pl-s"><span class="pl-pds">"</span>tag_id<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1234FF<span class="pl-pds">"</span></span>,
-    }
-)
-<span class="pl-c1">print</span> rsp.content</pre></div>
-
-<h1>
 <a id="common-flow---web" class="anchor" href="#common-flow---web" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common Flow - Web</h1>
 
 <h2>
-<a id="send-1" class="anchor" href="#send-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Send</h2>
+<a id="send" class="anchor" href="#send" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Send</h2>
 
 <pre><code>http://localhost:5000/send
 </code></pre>
@@ -164,7 +54,7 @@ rsp <span class="pl-k">=</span> requests.get(
 <p><img src="https://github.com/eugenechung81/chaching2/blob/master/documents/dia4.png?raw=true" alt="dia4.png"></p>
 
 <h2>
-<a id="receive-1" class="anchor" href="#receive-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Receive</h2>
+<a id="receive" class="anchor" href="#receive" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Receive</h2>
 
 <pre><code>http://localhost:5000/accept?tag_id=1234FF
 </code></pre>
@@ -172,52 +62,28 @@ rsp <span class="pl-k">=</span> requests.get(
 <p><img src="https://github.com/eugenechung81/chaching2/blob/master/documents/dia5.png?raw=true" alt="dia5.png"></p>
 
 <h1>
-<a id="verification" class="anchor" href="#verification" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Verification</h1>
+<a id="resources" class="anchor" href="#resources" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Resources</h1>
 
-<div class="highlight highlight-source-python"><pre><span class="pl-c"># Verify</span>
-<span class="pl-c"># http://localhost:5000/users</span>
-<span class="pl-c"># http://localhost:5000/transfers</span>
-<span class="pl-s"><span class="pl-pds">"""</span></span>
-<span class="pl-s">{</span>
-<span class="pl-s">  "bank_details": null,</span>
-<span class="pl-s">  "id": "a909f9c6-16a8-40ab-9481-7fd2f79a1c7f",</span>
-<span class="pl-s">  "password": "",</span>
-<span class="pl-s">  "password_hash": "$5$rounds=571829$F7wsGAlflbgRqyjh$9voqvHDYJs7TltCqvXOMyU8rbgMxNaXjx06XcCGFJPD",</span>
-<span class="pl-s">  "paypal_details": null,</span>
-<span class="pl-s">  "transfer_method": "VENMO",</span>
-<span class="pl-s">  "user_id": "917-555-6666",</span>
-<span class="pl-s">  "venmo_details": {</span>
-<span class="pl-s">    "access_code": "29665a58391e6a08f027a298c4e2f6bacf8614f9c82e5aa210fa0f838ad2301e",</span>
-<span class="pl-s">    "auth_code": "",</span>
-<span class="pl-s">    "venmo_id": "test-user-5"</span>
-<span class="pl-s">  }</span>
-<span class="pl-s">}</span>
-<span class="pl-s"></span>
-<span class="pl-s">{</span>
-<span class="pl-s">  "amount": 2.5,</span>
-<span class="pl-s">  "currency": "USD",</span>
-<span class="pl-s">  "description": "[Cha-Ching] 917-555-6666 -&gt; None : $2.50",</span>
-<span class="pl-s">  "destination_details": null,</span>
-<span class="pl-s">  "destination_method": "",</span>
-<span class="pl-s">  "destination_user_id": null,</span>
-<span class="pl-s">  "dwolla_xfer_a2m_uuid": "",</span>
-<span class="pl-s">  "dwolla_xfer_m2b_uuid": "",</span>
-<span class="pl-s">  "id": "9215dcbb-9cbd-47cd-b4a0-12690e194374",</span>
-<span class="pl-s">  "initiated_date": null,</span>
-<span class="pl-s">  "logs": [</span>
-<span class="pl-s">    "[2015-12-15 01:04:05] A-&gt;Mid Transaction Complete ([User user_id=917-555-6666, method=VENMO, details=(None, [Venmo access_code=29665a58391e6a08f027a298c4e2f6bacf8614f9c82e5aa210fa0f838ad2301e], None)])",</span>
-<span class="pl-s">    "[2015-12-15 01:04:05] Tag Id Generated (7MP2JE)"</span>
-<span class="pl-s">  ],</span>
-<span class="pl-s">  "source_details": null,</span>
-<span class="pl-s">  "source_method": "",</span>
-<span class="pl-s">  "source_user_id": "917-555-6666",</span>
-<span class="pl-s">  "status": "",</span>
-<span class="pl-s">  "tag_id": "7MP2JE"</span>
-<span class="pl-s">},</span>
-<span class="pl-s"><span class="pl-pds">"""</span></span></pre></div>
+<ul>
+<li>
+<a href="https://www.youtube.com/watch?v=4a0yygOUNrk">Presentation</a> / <a href="https://www.emaze.com/@AFOCZZQZ/chaching">Pitch Desk</a>
+</li>
+<li><a href="https://chaching.io/web/index.html">Website</a></li>
+<li>Demo - <a href="https://chaching.io/send">Send</a>, <a href="https://chaching.io/accept?tag_id=264KON">Receive</a>
+</li>
+</ul>
+
+<h1>
+<a id="awards" class="anchor" href="#awards" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Awards</h1>
+
+<ul>
+<li>MasterCard Hackathon - Semi-Finals</li>
+<li>TransferWise Hackathon - Best Hackers ($1000) </li>
+<li>SSM SXSW - National Finalist </li>
+</ul>
 
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/eugenechung81/chaching2">Chaching2</a> is maintained by <a href="https://github.com/eugenechung81">eugenechung81</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/eugenechung81/chaching2">Cha-ching</a> is maintained by <a href="https://github.com/eugenechung81">eugenechung81</a>.</span>
 
         <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
